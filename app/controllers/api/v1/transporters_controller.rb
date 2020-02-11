@@ -54,16 +54,32 @@ class Api::V1::TransportersController < ApplicationController
 
 
     if params[:key].present? && params[:key] == "THISISAPIKEY"
-        if params[:name].present? && params[:siret].present? && params[:postal_codes].present?
+        if params[:name].present? && params[:siret].present? && params[:postal_codes].present? && params[:carriers].present?
 
             name = params[:name]
             siret = params[:siret]
             postal_codes = params[:postal_codes]
+            carriers = params[:carriers]
+            tests = params[:carriers]
+
+            puts tests[0]{2}
+
+            tests.each do |carrier|
+                puts " ///////////"
+                puts carrier
+                puts " ///////////"
+
+            end
+
+            # puts " ///////////"
+            # puts carriers[0]
+            # puts " ///////////"
 
             @transporter = Transporter.new(
                 name: name,
                 siret: siret,
-                postal_codes: postal_codes
+                postal_codes: postal_codes,
+                carriers: carriers
             )
 
             if @transporter.save!
