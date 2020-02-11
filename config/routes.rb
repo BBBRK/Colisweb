@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
           resources :transporters
 
+          post '/test', to: 'transporters#test'
+
 
         end
     end
-    
+
 end

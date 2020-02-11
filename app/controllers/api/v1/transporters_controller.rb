@@ -13,6 +13,25 @@ class Api::V1::TransportersController < ApplicationController
 
   end
 
+  # def test
+  #     @transporter = Transporter.new(transporter_params)
+  #
+  #     if params[:key].present? && params[:key] == "THISISAPIKEY"
+  #         puts "OK CHEF"
+  #
+  #     else
+  #         head :unauthorized
+  #     end
+  #
+  #     if @transporter.save
+  #         render json: @transporter, status: :created, location: api_v1_article_url(@transporter)
+  #     else
+  #         render json: @transporter.errors, status: :unprocessable_entity
+  #
+  #     end
+  #
+  # end
+
   # GET /transporters/1
   # GET /transporters/1.json
   def show
@@ -32,21 +51,41 @@ class Api::V1::TransportersController < ApplicationController
   # POST /transporters
   # POST /transporters.json
   def create
-    @transporter = Transporter.new(transporter_params)
+
 
     if params[:key].present? && params[:key] == "THISISAPIKEY"
-        puts "OK CHEF"
+        if params[:name].present? && params[:siret].present? && params[:postal_codes].present?
+
+            name = params[:name]
+            siret = params[:siret]
+            postal_codes = params[:postal_codes]
+
+            @transporter = Transporter.new(
+                name: name,
+                siret: siret,
+                postal_codes: postal_codes
+            )
+
+            if @transporter.save!
+                head :ok
+            else
+                head :bad_request
+            end
+
+        else
+            head :bad_request
+        end
 
     else
         head :unauthorized
     end
 
-    if @transporter.save
-        render json: @transporter, status: :created, location: api_v1_article_url(@transporter)
-    else
-        render json: @transporter.errors, status: :unprocessable_entity
-
-    end
+    # if @transporter.save
+    #     render json: @transporter, status: :created, location: api_v1_article_url(@transporter)
+    # else
+    #     render json: @transporter.errors, status: :unprocessable_entity
+    #
+    # end
   end
 
   # PATCH/PUT /transporters/1
