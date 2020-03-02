@@ -13,24 +13,6 @@ class Api::V1::TransportersController < ApplicationController
 
   end
 
-  # def test
-  #     @transporter = Transporter.new(transporter_params)
-  #
-  #     if params[:key].present? && params[:key] == "THISISAPIKEY"
-  #         puts "OK CHEF"
-  #
-  #     else
-  #         head :unauthorized
-  #     end
-  #
-  #     if @transporter.save
-  #         render json: @transporter, status: :created, location: api_v1_article_url(@transporter)
-  #     else
-  #         render json: @transporter.errors, status: :unprocessable_entity
-  #
-  #     end
-  #
-  # end
 
   # GET /transporters/1
   # GET /transporters/1.json
@@ -56,30 +38,35 @@ class Api::V1::TransportersController < ApplicationController
     if params[:key].present? && params[:key] == "THISISAPIKEY"
         if params[:name].present? && params[:siret].present? && params[:postal_codes].present? && params[:carriers].present?
 
-            name = params[:name]
-            siret = params[:siret]
-            postal_codes = params[:postal_codes]
-            carriers = params[:carriers]
-            tests = params[:carriers]
+            transp_name = params[:name]
+            transp_siret = params[:siret]
+            transp_postal_codes = params[:postal_codes]
+            @carriers = params[:carriers]
 
-            puts tests[0]{2}
 
-            tests.each do |carrier|
-                puts " ///////////"
-                puts carrier
-                puts " ///////////"
+            @carriers.each do |carrier|
+                puts carrier[:name]
+                @carrier = Carrier.new(
+                    name: carrier[:name],
+                    age: carrier[:age],
+                    has_driver_licence_a: carrier[:has_driver_licence_a],
+                    has_driver_licence_b: carrier[:has_driver_licence_b],
+                    has_driver_licence_c: carrier[:has_driver_licence_c]
+                )
 
+                if @carrier.save!
+                    head :ok
+                else
+                    head :bad_request
+                end
             end
 
-            # puts " ///////////"
-            # puts carriers[0]
-            # puts " ///////////"
 
             @transporter = Transporter.new(
-                name: name,
-                siret: siret,
-                postal_codes: postal_codes,
-                carriers: carriers
+                name: transp_name,
+                siret: transp_siret,
+                postal_codes: transp_postal_codes,
+                carriers: @carriers
             )
 
             if @transporter.save!

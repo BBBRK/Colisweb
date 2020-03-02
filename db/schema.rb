@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200211152551) do
+ActiveRecord::Schema.define(version: 20200302115144) do
+
+  create_table "carriers", force: :cascade do |t|
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "name"
+    t.integer  "age"
+    t.boolean  "has_driver_licence_a"
+    t.boolean  "has_driver_licence_b"
+    t.boolean  "has_driver_licence_c"
+  end
 
   create_table "transporters", force: :cascade do |t|
     t.string "name"
