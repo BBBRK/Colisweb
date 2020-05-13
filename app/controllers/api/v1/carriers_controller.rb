@@ -25,4 +25,13 @@ class Api::V1::CarriersController < ApplicationController
         end
     end
 
+    def by_coord
+        @carrier = Carrier.where(latitude: params[:latitude], longitude: params[:longitude])
+
+        if @carrier.present?
+            render json @carrier
+        end
+
+    end
+
 end

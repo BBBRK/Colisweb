@@ -10,24 +10,24 @@ class Api::V1::TransportersController < ApplicationController
     render json: @transporters
   end
 
-  #
-  # # GET /transporters/1
-  # # GET /transporters/1.json
-  # def show
-  # end
-  #
-  # # GET /transporters/new
-  # def new
-  #   @transporter = Transporter.new
-  #   head :ok
-  # end
-  #
-  # # GET /transporters/1/edit
-  # def edit
-  # end
 
-  # POST /transporters
-  # POST /transporters.json
+  # GET /transporters/1
+  # GET /transporters/1.json
+  def show
+  end
+
+  # GET /transporters/new
+  def new
+    @transporter = Transporter.new
+    head :ok
+  end
+
+  # GET /transporters/1/edit
+  def edit
+  end
+
+  #POST /transporters
+  #POST /transporters.json
   def create
     if params[:key].present? && params[:key] == "THISISAPIKEY"
         if params[:name].present? && params[:siret].present? && params[:postal_codes].present? && params[:carriers].present?
@@ -76,36 +76,43 @@ class Api::V1::TransportersController < ApplicationController
     end
   end
 
-  def get_carriers()
+  def get_carriers
 
       @transporter = Transporter.find(params[:id])
 
       render json: @transporter.carriers
   end
 
+  def by_postal_codes
+      @transporters = Transporter.all.order(postal_codes: "ASC")
+
+      render json: @transporters
+
+  end
+
   # PATCH/PUT /transporters/1
   # PATCH/PUT /transporters/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @transporter.update(transporter_params)
-  #       format.html { redirect_to @transporter, notice: 'Transporter was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @transporter }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @transporter.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  #
-  # # DELETE /transporters/1
-  # # DELETE /transporters/1.json
-  # def destroy
-  #   @transporter.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to transporters_url, notice: 'Transporter was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
+  def update
+    respond_to do |format|
+      if @transporter.update(transporter_params)
+        format.html { redirect_to @transporter, notice: 'Transporter was successfully updated.' }
+        format.json { render :show, status: :ok, location: @transporter }
+      else
+        format.html { render :edit }
+        format.json { render json: @transporter.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /transporters/1
+  # DELETE /transporters/1.json
+  def destroy
+    @transporter.destroy
+    respond_to do |format|
+      format.html { redirect_to transporters_url, notice: 'Transporter was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
 
   private
