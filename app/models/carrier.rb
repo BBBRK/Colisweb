@@ -4,11 +4,9 @@ class Carrier < ActiveRecord::Base
     belongs_to :transporter
 
     validates :name, presence: true
-
-    # validates :has_driver_licence_a, inclusion: { in: [true, false] }
-    # validates :has_driver_licence_b, inclusion: { in: [true, false] }
-    # validates :has_driver_licence_c, inclusion: { in: [true, false] }
-
+    validates :latitude, presence: true
+    validates :longitude, presence: true
+    validates :altitude, presence: true
 
     before_save :checkLicence
 

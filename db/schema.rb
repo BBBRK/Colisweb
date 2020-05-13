@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200302115144) do
+ActiveRecord::Schema.define(version: 20200513081055) do
 
   create_table "carriers", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(version: 20200302115144) do
     t.boolean  "has_driver_licence_a"
     t.boolean  "has_driver_licence_b"
     t.boolean  "has_driver_licence_c"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "altitude"
   end
 
   create_table "transporters", force: :cascade do |t|
