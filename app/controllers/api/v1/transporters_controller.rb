@@ -7,71 +7,106 @@ class Api::V1::TransportersController < ApplicationController
   # GET /transporters.json
   def index
     @transporters = Transporter.all
-
     render json: @transporters
-
-
   end
 
-  # GET /transporters/1
-  # GET /transporters/1.json
-  def show
-  end
-
-  # GET /transporters/new
-  def new
-    @transporter = Transporter.new
-
-    head :ok
-  end
-
-  # GET /transporters/1/edit
-  def edit
-  end
+  #
+  # # GET /transporters/1
+  # # GET /transporters/1.json
+  # def show
+  # end
+  #
+  # # GET /transporters/new
+  # def new
+  #   @transporter = Transporter.new
+  #   head :ok
+  # end
+  #
+  # # GET /transporters/1/edit
+  # def edit
+  # end
 
   # POST /transporters
   # POST /transporters.json
   def create
-    @transporter = Transporter.new(transporter_params)
-
     if params[:key].present? && params[:key] == "THISISAPIKEY"
-        puts "OK CHEF"
+        if params[:name].present? && params[:siret].present? && params[:postal_codes].present? && params[:carriers].present?
+
+            transp_name = params[:name]
+            transp_siret = params[:siret]
+            transp_postal_codes = params[:postal_codes]
+            @carriers = params[:carriers]
+
+            @carriers.each do |carrier|
+                puts carrier[:name]
+                @carrier = Carrier.new(
+                    name: carrier[:name],
+                    age: carrier[:age],
+                    has_driver_licence_a: carrier[:has_driver_licence_a],
+                    has_driver_licence_b: carrier[:has_driver_licence_b],
+                    has_driver_licence_c: carrier[:has_driver_licence_c]
+                )
+
+                if @carrier.save!
+                    head :ok
+                else
+                    head :bad_request
+                end
+            end
+
+            @transporter = Transporter.new(
+                name: transp_name,
+                siret: transp_siret,
+                postal_codes: transp_postal_codes,
+                carriers: @carriers
+            )
+
+            if @transporter.save!
+                head :ok
+            else
+                head :bad_request
+            end
+
+        else
+            head :bad_request
+        end
 
     else
         head :unauthorized
     end
+  end
 
-    if @transporter.save
-        render json: @transporter, status: :created, location: api_v1_article_url(@transporter)
-    else
-        render json: @transporter.errors, status: :unprocessable_entity
+  def get_carriers()
 
-    end
+      @transporter = Transporter.find(params[:id])
+
+      render json: @transporter.carriers
   end
 
   # PATCH/PUT /transporters/1
   # PATCH/PUT /transporters/1.json
-  def update
-    respond_to do |format|
-      if @transporter.update(transporter_params)
-        format.html { redirect_to @transporter, notice: 'Transporter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @transporter }
-      else
-        format.html { render :edit }
-        format.json { render json: @transporter.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #     if @transporter.update(transporter_params)
+  #       format.html { redirect_to @transporter, notice: 'Transporter was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @transporter }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @transporter.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+  #
+  # # DELETE /transporters/1
+  # # DELETE /transporters/1.json
+  # def destroy
+  #   @transporter.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to transporters_url, notice: 'Transporter was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
-  # DELETE /transporters/1
-  # DELETE /transporters/1.json
-  def destroy
-    @transporter.destroy
-    respond_to do |format|
-      format.html { redirect_to transporters_url, notice: 'Transporter was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
