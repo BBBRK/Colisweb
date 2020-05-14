@@ -33,7 +33,6 @@ class Api::V1::CarriersController < ApplicationController
         else
             render json: "Aucun carrier trouvé à ces coordonnées"
         end
-
     end
 
 end
