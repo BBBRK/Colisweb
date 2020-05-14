@@ -2,7 +2,7 @@ class Api::V1::CarriersController < ApplicationController
     skip_before_action :verify_authenticity_token
 
 
-
+    #Permet de remplacer les coordonnées d'un carrier
     def tracking
         if params[:key].present? && params[:key] == "THISISAPIKEY"
             if params[:id].present? && params[:latitude].present? && params[:longitude].present? && params[:altitude].present?
@@ -16,7 +16,6 @@ class Api::V1::CarriersController < ApplicationController
                 else
                     head :bad_request
                 end
-                #render json: @carrier
             else
                 head :bad_request
             end
@@ -25,11 +24,14 @@ class Api::V1::CarriersController < ApplicationController
         end
     end
 
+    #Permet de reccuperer un carrier via ses coordonnées
     def by_coord
-        @carrier = Carrier.where(latitude: params[:latitude], longitude: params[:longitude])
+        @carriers = Carrier.all.where(latitude: params[:latitude], longitude: params[:longitude])
 
-        if @carrier.present?
-            render json @carrier
+        if @carriers.present?
+            render json: @carriers
+        else
+            render json: "Aucun carrier trouvé à ces coordonnées"
         end
 
     end

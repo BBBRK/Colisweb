@@ -10,6 +10,7 @@ class Carrier < ActiveRecord::Base
 
     before_save :checkLicence
 
+    #check la validité d'au moins un des permis
     def checkLicence
         if self.has_driver_licence_a == true || self.has_driver_licence_b == true || self.has_driver_licence_c == true
             return true
