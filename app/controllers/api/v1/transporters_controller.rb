@@ -16,7 +16,12 @@ class Api::V1::TransportersController < ApplicationController
             transp_siret = params[:siret]
             transp_postal_codes = params[:postal_codes]
             @carriers = params[:carriers]
-            transp_id = Transporter.last.id + 1
+            if Transporter.last.nil?
+                transp_id = 1
+            else
+                transp_id = Transporter.last.id + 1
+            end
+
 
             @carriers.each do |carrier|
                 @carrier = Carrier.new(

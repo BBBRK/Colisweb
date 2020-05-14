@@ -15747,3 +15747,451 @@ Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 17:10:24 +0200
 Processing by Api::V1::TransportersController#create as */*
   Parameters: {"name"=>"NameTest", "siret"=>"SIRETtesdffxsdfdfxdfzt", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY"}
 Completed 400 Bad Request in 0ms (ActiveRecord: 0.0ms)
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 17:25:07 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRETtesdffxsdfdfxdfzt", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[35mTransporter Load (0.1ms)[0m  SELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "Jon"], ["age", 99], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 23], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 15:25:07.583765"], ["updated_at", "2020-05-14 15:25:07.583765"]]
+  [1m[36m (1.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Jean"], ["age", 19], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 23], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 15:25:07.587699"], ["updated_at", "2020-05-14 15:25:07.587699"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTransporter Exists (0.2ms)[0m  SELECT  1 AS one FROM "transporters" WHERE "transporters"."siret" = 'SIRETtesdffxsdfdfxdfzt' LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "transporters" ("name", "siret", "postal_codes", "carriers") VALUES (?, ?, ?, ?)[0m  [["name", "NameTest"], ["siret", "SIRETtesdffxsdfdfxdfzt"], ["postal_codes", "---\n- '02100'\n- '02230'\n"], ["carriers", "---\n- !ruby/hash-with-ivars:ActionController::Parameters\n  elements:\n    name: Jon\n    age: '99'\n    has_driver_licence_a: 'false'\n    has_driver_licence_b: 'true'\n    has_driver_licence_c: 'false'\n  ivars:\n    :@permitted: false\n- !ruby/hash-with-ivars:ActionController::Parameters\n  elements:\n    name: Jean\n    age: '19'\n    has_driver_licence_a: 'false'\n    has_driver_licence_b: 'true'\n    has_driver_licence_c: 'false'\n  ivars:\n    :@permitted: false\n"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+Completed 200 OK in 28ms (ActiveRecord: 7.1ms)
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 17:25:49 +0200
+Processing by Api::V1::TransportersController#get_carriers as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTransporter Load (0.2ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/transporters/10/carriers" for 127.0.0.1 at 2020-05-14 17:26:04 +0200
+Processing by Api::V1::TransportersController#get_carriers as HTML
+  Parameters: {"id"=>"10"}
+  [1m[35mTransporter Load (0.1ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 10]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 17:26:10 +0200
+Processing by Api::V1::TransportersController#get_carriers as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/transporters/120/carriers" for 127.0.0.1 at 2020-05-14 17:26:17 +0200
+Processing by Api::V1::TransportersController#get_carriers as HTML
+  Parameters: {"id"=>"120"}
+  [1m[35mTransporter Load (0.2ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 120]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.2ms)
+
+ActiveRecord::RecordNotFound (Couldn't find Transporter with 'id'=120):
+  app/controllers/api/v1/transporters_controller.rb:76:in `get_carriers'
+
+
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (21.6ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (15.7ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.2ms)
+
+
+Started GET "/api/v1/transporters/20/carriers" for 127.0.0.1 at 2020-05-14 17:26:25 +0200
+Processing by Api::V1::TransportersController#get_carriers as HTML
+  Parameters: {"id"=>"20"}
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 20]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.1ms)
+  [1m[36mTransporter Load (0.4ms)[0m  [1mSELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" ASC LIMIT 1[0m
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 20:16:15 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Api::V1::TransportersController#get_carriers as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mTransporter Load (0.3ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 1]]
+Completed 200 OK in 22ms (Views: 0.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2020-05-14 20:16:16 +0200
+
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  actionpack (4.2.11.1) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.11.1) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.11.1) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.11.1) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.11.1) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.11.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.11.1) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.11.1) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.11.1) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.13) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.13) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.11.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.13) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.11.1) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.13) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.11.1) lib/rails/engine.rb:518:in `call'
+  railties (4.2.11.1) lib/rails/application.rb:165:in `call'
+  rack (1.6.13) lib/rack/lock.rb:17:in `call'
+  rack (1.6.13) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.13) lib/rack/handler/webrick.rb:88:in `service'
+  /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/2.5.0/webrick/httpserver.rb:140:in `service'
+  /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/2.5.0/webrick/httpserver.rb:96:in `run'
+  /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/2.5.0/webrick/server.rb:307:in `block in start_thread'
+
+
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.1ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.8ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (6.9ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (31.1ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (23.0ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (39.3ms)
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 20:16:27 +0200
+Processing by Api::V1::TransportersController#get_carriers as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1", "altitude"=>"1.1", "key"=>"THISISAPIKEY", "id"=>"1"}
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/transporters/by_postal_codes" for 127.0.0.1 at 2020-05-14 20:18:35 +0200
+Processing by Api::V1::TransportersController#by_postal_codes as HTML
+  [1m[35mTransporter Load (0.4ms)[0m  SELECT "transporters".* FROM "transporters"  ORDER BY "transporters"."postal_codes" ASC
+Completed 200 OK in 20ms (Views: 19.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/api/v1/transporters/by_postal_codes" for 127.0.0.1 at 2020-05-14 20:18:58 +0200
+Processing by Api::V1::TransportersController#by_postal_codes as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRETtesdffxsdfdfxdfzt", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[36mTransporter Load (0.4ms)[0m  [1mSELECT "transporters".* FROM "transporters"  ORDER BY "transporters"."postal_codes" ASC[0m
+Completed 200 OK in 42ms (Views: 39.9ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/api/v1/carriers/passed_by/1.1/1.1" for 127.0.0.1 at 2020-05-14 20:21:07 +0200
+Processing by Api::V1::CarriersController#by_coord as HTML
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1"}
+  [1m[35mCarrier Load (0.3ms)[0m  SELECT "carriers".* FROM "carriers" WHERE "carriers"."latitude" = ? AND "carriers"."longitude" = ?  [["latitude", 1.1], ["longitude", 1.1]]
+Completed 200 OK in 21ms (Views: 1.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/api/v1/carriers/passed_by/1.1/1.1" for 127.0.0.1 at 2020-05-14 20:22:21 +0200
+Processing by Api::V1::CarriersController#by_coord as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1", "altitude"=>"-88.8", "key"=>"THISISAPIKEY"}
+  [1m[36mCarrier Load (0.1ms)[0m  [1mSELECT "carriers".* FROM "carriers" WHERE "carriers"."latitude" = ? AND "carriers"."longitude" = ?[0m  [["latitude", 1.1], ["longitude", 1.1]]
+Completed 200 OK in 2ms (Views: 0.9ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/transporters/with_carriers_passed_by/1.1/1.1" for 127.0.0.1 at 2020-05-14 20:22:54 +0200
+Processing by Api::V1::TransportersController#by_carriers_passed_by as HTML
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1"}
+  [1m[35mCarrier Load (0.2ms)[0m  SELECT "carriers".* FROM "carriers" WHERE "carriers"."latitude" = ? AND "carriers"."longitude" = ?  [["latitude", 1.1], ["longitude", 1.1]]
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 20]]
+  [1m[35mTransporter Load (0.2ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 21]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 21]]
+Completed 200 OK in 5ms (Views: 2.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/api/v1/transporters/with_carriers_passed_by/1.1/1.1" for 127.0.0.1 at 2020-05-14 20:23:08 +0200
+Processing by Api::V1::TransportersController#by_carriers_passed_by as */*
+  Parameters: {"name"=>"Mikaël", "mail"=>"mikael.mail@exemple.fr", "latitude"=>"1.1", "longitude"=>"1.1"}
+  [1m[35mCarrier Load (0.1ms)[0m  SELECT "carriers".* FROM "carriers" WHERE "carriers"."latitude" = ? AND "carriers"."longitude" = ?  [["latitude", 1.1], ["longitude", 1.1]]
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 20]]
+  [1m[35mTransporter Load (0.1ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 21]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 21]]
+Completed 200 OK in 4ms (Views: 2.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/api/v1/transporters/by_postal_codes" for 127.0.0.1 at 2020-05-14 20:35:54 +0200
+Processing by Api::V1::TransportersController#by_postal_codes as */*
+  [1m[35mTransporter Load (0.2ms)[0m  SELECT "transporters".* FROM "transporters"  ORDER BY "transporters"."postal_codes" ASC
+Completed 200 OK in 15ms (Views: 14.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/carriers/passed_by/1.1/1.1" for 127.0.0.1 at 2020-05-14 20:37:04 +0200
+Processing by Api::V1::CarriersController#by_coord as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1", "altitude"=>"-88.8", "key"=>"THISISAPIKEY"}
+  [1m[36mCarrier Load (0.1ms)[0m  [1mSELECT "carriers".* FROM "carriers" WHERE "carriers"."latitude" = ? AND "carriers"."longitude" = ?[0m  [["latitude", 1.1], ["longitude", 1.1]]
+Completed 200 OK in 3ms (Views: 1.3ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/transporters/by_postal_codes" for 127.0.0.1 at 2020-05-14 20:37:08 +0200
+Processing by Api::V1::TransportersController#by_postal_codes as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRETtesdffxsdfdfxdfzt", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[35mTransporter Load (0.5ms)[0m  SELECT "transporters".* FROM "transporters"  ORDER BY "transporters"."postal_codes" ASC
+Completed 200 OK in 14ms (Views: 13.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 20:37:14 +0200
+Processing by Api::V1::TransportersController#get_carriers as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1", "altitude"=>"1.1", "key"=>"THISISAPIKEY", "id"=>"1"}
+  [1m[36mTransporter Load (0.2ms)[0m  [1mSELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 20:37:15 +0200
+Processing by Api::V1::TransportersController#get_carriers as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1", "altitude"=>"1.1", "key"=>"THISISAPIKEY", "id"=>"1"}
+  [1m[35mTransporter Load (0.1ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 1]]
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/transporters/by_postal_codes" for 127.0.0.1 at 2020-05-14 20:37:52 +0200
+Processing by Api::V1::TransportersController#by_postal_codes as */*
+  [1m[36mTransporter Load (0.5ms)[0m  [1mSELECT "transporters".* FROM "transporters"  ORDER BY "transporters"."postal_codes" ASC[0m
+Completed 200 OK in 14ms (Views: 13.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/api/v1/transporters/1/carriers" for 127.0.0.1 at 2020-05-14 20:38:06 +0200
+Processing by Api::V1::TransportersController#get_carriers as */*
+  Parameters: {"id"=>"1"}
+  [1m[35mTransporter Load (0.1ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.1ms)
+  [1m[36m (3.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (1.8ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateTransporters (20200211134747)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "transporters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200211134747"]]
+  [1m[35m (1.9ms)[0m  commit transaction
+Migrating to AddColToTransporter (20200211135032)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "transporters" ADD "siret" varchar
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "transporters" ADD "postal_codes" varchar[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20200211135032"]]
+  [1m[36m (1.8ms)[0m  [1mcommit transaction[0m
+Migrating to RemoveColToTransporter (20200211135102)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "atransporters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "siret" varchar, "postal_codes" varchar) [0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "transporters"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "transporters"[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "transporters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "updated_at" datetime NOT NULL, "siret" varchar, "postal_codes" varchar) 
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "atransporters"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "atransporters"
+  [1m[36m (0.1ms)[0m  [1mCREATE TEMPORARY TABLE "atransporters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "updated_at" datetime NOT NULL, "siret" varchar, "postal_codes" varchar) [0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "transporters"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "transporters"[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "transporters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "siret" varchar, "postal_codes" varchar) 
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "atransporters"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "atransporters"
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200211135102"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+Migrating to AddCarrierToTransporter (20200211152551)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "transporters" ADD "carriers" varchar
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200211152551"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+Migrating to CreateCarriers (20200302114528)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "carriers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200302114528"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+Migrating to AddColToCarriers (20200302115144)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "carriers" ADD "name" varchar
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "carriers" ADD "age" integer[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "carriers" ADD "has_driver_licence_a" boolean
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "carriers" ADD "has_driver_licence_b" boolean[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "carriers" ADD "has_driver_licence_c" boolean
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200302115144"]]
+  [1m[35m (1.7ms)[0m  commit transaction
+Migrating to AddCoordToCarriers (20200513081055)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "carriers" ADD "latitude" double
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "carriers" ADD "longitude" double[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "carriers" ADD "altitude" double
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200513081055"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+Migrating to AddFkToCarriers (20200514130319)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "carriers" ADD "transporter_id" integer
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200514130319"]]
+  [1m[35m (1.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 20:44:23 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRET123", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1[0m
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.6ms)
+
+NoMethodError (undefined method `id' for nil:NilClass):
+  app/controllers/api/v1/transporters_controller.rb:19:in `create'
+
+
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (5.8ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (27.7ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (23.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (41.5ms)
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 20:45:08 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRET123", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[35mTransporter Load (0.1ms)[0m  SELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.5ms)
+
+NoMethodError (undefined method `id' for nil:NilClass):
+  app/controllers/api/v1/transporters_controller.rb:19:in `create'
+
+
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (6.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (23.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (13.6ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (27.6ms)
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 20:46:22 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRET123", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.5ms)
+
+NoMethodError (undefined method `id' for nil:NilClass):
+  app/controllers/api/v1/transporters_controller.rb:22:in `create'
+
+
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.0ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.8ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (15.9ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (35.5ms)
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 20:47:12 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRET123", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[36mTransporter Load (0.1ms)[0m  [1mSELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Jon"], ["age", 99], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 1], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 18:47:12.178173"], ["updated_at", "2020-05-14 18:47:12.178173"]]
+  [1m[35m (1.9ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "Jean"], ["age", 19], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 1], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 18:47:12.182287"], ["updated_at", "2020-05-14 18:47:12.182287"]]
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mTransporter Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "transporters" WHERE "transporters"."siret" = 'SIRET123' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "transporters" ("name", "siret", "postal_codes", "carriers") VALUES (?, ?, ?, ?)  [["name", "NameTest"], ["siret", "SIRET123"], ["postal_codes", "---\n- '02100'\n- '02230'\n"], ["carriers", "---\n- !ruby/hash-with-ivars:ActionController::Parameters\n  elements:\n    name: Jon\n    age: '99'\n    has_driver_licence_a: 'false'\n    has_driver_licence_b: 'true'\n    has_driver_licence_c: 'false'\n  ivars:\n    :@permitted: false\n- !ruby/hash-with-ivars:ActionController::Parameters\n  elements:\n    name: Jean\n    age: '19'\n    has_driver_licence_a: 'false'\n    has_driver_licence_b: 'true'\n    has_driver_licence_c: 'false'\n  ivars:\n    :@permitted: false\n"]]
+  [1m[36m (1.8ms)[0m  [1mcommit transaction[0m
+Completed 200 OK in 38ms (ActiveRecord: 7.0ms)
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 20:47:17 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRET123", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[35mTransporter Load (0.2ms)[0m  SELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Jon"], ["age", 99], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 2], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 18:47:17.016684"], ["updated_at", "2020-05-14 18:47:17.016684"]]
+  [1m[35m (1.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "Jean"], ["age", 19], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 2], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 18:47:17.021670"], ["updated_at", "2020-05-14 18:47:17.021670"]]
+  [1m[36m (2.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mTransporter Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "transporters" WHERE "transporters"."siret" = 'SIRET123' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+Completed 422 Unprocessable Entity in 16ms (ActiveRecord: 5.1ms)
+
+ActiveRecord::RecordInvalid (Validation failed: Siret has already been taken):
+  app/controllers/api/v1/transporters_controller.rb:66:in `create'
+
+
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.5ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/actionpack-4.2.11.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (18.4ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (14.1ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /home/jimmy/.rbenv/versions/2.5.7/lib/ruby/gems/2.5.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (29.3ms)
+
+
+Started POST "/api/v1/transporters" for 127.0.0.1 at 2020-05-14 20:47:21 +0200
+Processing by Api::V1::TransportersController#create as */*
+  Parameters: {"name"=>"NameTest", "siret"=>"SIRET1234", "postal_codes"=>["02100", "02230"], "key"=>"THISISAPIKEY", "carriers"=>[{"name"=>"Jon", "age"=>"99", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}, {"name"=>"Jean", "age"=>"19", "has_driver_licence_a"=>"false", "has_driver_licence_b"=>"true", "has_driver_licence_c"=>"false"}]}
+  [1m[36mTransporter Load (0.2ms)[0m  [1mSELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "transporters".* FROM "transporters"  ORDER BY "transporters"."id" DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["name", "Jon"], ["age", 99], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 2], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 18:47:21.226878"], ["updated_at", "2020-05-14 18:47:21.226878"]]
+  [1m[36m (4.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "carriers" ("name", "age", "has_driver_licence_a", "has_driver_licence_b", "has_driver_licence_c", "transporter_id", "latitude", "longitude", "altitude", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Jean"], ["age", 19], ["has_driver_licence_a", "f"], ["has_driver_licence_b", "t"], ["has_driver_licence_c", "f"], ["transporter_id", 2], ["latitude", 0.0], ["longitude", 0.0], ["altitude", 0.0], ["created_at", "2020-05-14 18:47:21.235609"], ["updated_at", "2020-05-14 18:47:21.235609"]]
+  [1m[35m (2.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mTransporter Exists (0.2ms)[0m  SELECT  1 AS one FROM "transporters" WHERE "transporters"."siret" = 'SIRET1234' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "transporters" ("name", "siret", "postal_codes", "carriers") VALUES (?, ?, ?, ?)[0m  [["name", "NameTest"], ["siret", "SIRET1234"], ["postal_codes", "---\n- '02100'\n- '02230'\n"], ["carriers", "---\n- !ruby/hash-with-ivars:ActionController::Parameters\n  elements:\n    name: Jon\n    age: '99'\n    has_driver_licence_a: 'false'\n    has_driver_licence_b: 'true'\n    has_driver_licence_c: 'false'\n  ivars:\n    :@permitted: false\n- !ruby/hash-with-ivars:ActionController::Parameters\n  elements:\n    name: Jean\n    age: '19'\n    has_driver_licence_a: 'false'\n    has_driver_licence_b: 'true'\n    has_driver_licence_c: 'false'\n  ivars:\n    :@permitted: false\n"]]
+  [1m[35m (2.0ms)[0m  commit transaction
+Completed 200 OK in 31ms (ActiveRecord: 10.6ms)
+
+
+Started PUT "/api/v1/carrier/1/trackings" for 127.0.0.1 at 2020-05-14 20:47:48 +0200
+Processing by Api::V1::CarriersController#tracking as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1", "altitude"=>"25", "key"=>"THISISAPIKEY", "id"=>"1"}
+  [1m[36mCarrier Load (0.2ms)[0m  [1mSELECT  "carriers".* FROM "carriers" WHERE "carriers"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE "carriers" SET "latitude" = ?, "longitude" = ?, "altitude" = ?, "updated_at" = ? WHERE "carriers"."id" = ?[0m  [["latitude", 1.1], ["longitude", 1.1], ["altitude", 25.0], ["updated_at", "2020-05-14 18:47:48.732270"], ["id", 1]]
+  [1m[35m (1.8ms)[0m  commit transaction
+Completed 200 OK in 5ms (ActiveRecord: 2.3ms)
+
+
+Started GET "/api/v1/transporters/with_carriers_passed_by/1.1/1.1" for 127.0.0.1 at 2020-05-14 20:47:56 +0200
+Processing by Api::V1::TransportersController#by_carriers_passed_by as */*
+  Parameters: {"latitude"=>"1.1", "longitude"=>"1.1"}
+  [1m[36mCarrier Load (0.3ms)[0m  [1mSELECT "carriers".* FROM "carriers" WHERE "carriers"."latitude" = ? AND "carriers"."longitude" = ?[0m  [["latitude", 1.1], ["longitude", 1.1]]
+  [1m[35mTransporter Load (0.2ms)[0m  SELECT  "transporters".* FROM "transporters" WHERE "transporters"."id" = ? LIMIT 1  [["id", 1]]
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.5ms)
